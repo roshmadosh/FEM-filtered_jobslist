@@ -13,22 +13,7 @@ function Filter({ activeFilters }) {
     const [openCategories, setOpenCategories] = useState(initOpenCategories);
 
     function onClick(category) {
-        switch (category) {
-            case 'role':
-                setOpenCategories({...openCategories, role: !openCategories.role});
-                break;
-            case 'level':
-                setOpenCategories({...openCategories, role: !openCategories.level});
-                break;
-            case 'location':
-                setOpenCategories({...openCategories, role: !openCategories.location});
-                break;
-            case 'languages':
-                setOpenCategories({...openCategories, role: !openCategories.languages});
-                break;
-            default:
-                break;
-        }
+        setOpenCategories({ ...openCategories, [category]: !openCategories[category]});
     }
 
     function curriedToggle(label) {
