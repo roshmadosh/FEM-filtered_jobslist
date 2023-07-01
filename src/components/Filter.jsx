@@ -10,7 +10,6 @@ const initOpenCategories = {
     language: false,
 }
 
-
 function Filter({ dispatchModal, activeFilters }) {
     const containerStyles = cntl`
         flex 

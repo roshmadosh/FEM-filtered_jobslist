@@ -7,8 +7,10 @@ function Modal({ modalState }) {
         left-0 
         bottom-8 
         ml-2
+        rounded
         sm: ml-4
-        w-80 
+        w-4/5
+        sm:w-fit
         p-4 
         ${modalState.status === MODAL_STATUS_OK && 'text-white bg-green-700' }
         ${modalState.status === MODAL_STATUS_ERROR && 'text-white bg-red-700' }

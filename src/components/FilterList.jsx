@@ -1,7 +1,5 @@
 import cntl from "cntl";
 
-
-
 function FilterList({ isOpen, options, toggle }) {
     const ulStyles = cntl`
         absolute 
