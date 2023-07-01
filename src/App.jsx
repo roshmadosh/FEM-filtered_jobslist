@@ -1,25 +1,39 @@
 import { useState } from "react"
 import { Header, Filter } from "./components";
 
+class FilterOption {
+  label;
+  isChecked = false;
+
+  constructor(label) {
+    this.label = label;
+  }
+}
+
 const initRoleOptions = [
-    {
-        label: "Frontend",
-        isChecked: false
-    },
-    {
-        label: "Backend",
-        isChecked: false
-    },
-    {
-        label: "Fullstack",
-        isChecked: false
-    },
-]
+  new FilterOption("Frontend"), 
+  new FilterOption("Backend"), 
+  new FilterOption("Fullstack")
+];
+    
+const initLevelOptions = [
+  new FilterOption("Midweight"), 
+  new FilterOption("Junior"), 
+  new FilterOption("Senior"), 
+];
+
+const initLocationOptions = [];
+const initLanguageOptions = []
+
+const initActiveFilters =  {
+  role: initRoleOptions,
+  level: initLevelOptions,
+  location: initLocationOptions,
+  language: initLanguageOptions,
+}
 
 function App() {
-  // each filter "category" is a key. The value is a list of the options for that category.
-  const [activeFilters, setActiveFilters] = useState({ role: initRoleOptions });
-
+  const [activeFilters, setActiveFilters] = useState(initActiveFilters);
   
   function toggleFilter(key, ind) {
     const nestedUpdate = [ ...activeFilters[key] ];

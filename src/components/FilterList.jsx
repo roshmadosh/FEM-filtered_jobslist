@@ -1,16 +1,32 @@
-function FilterList({ options, toggle }) {
+import cntl from "cntl";
 
-    function onChecked(ind) {
-        const copy = [...options];
-        copy[ind].isChecked = !copy[ind].isChecked;
-        activeFilters.set([...activeFilters.state, copy[ind].label]);
-    }
-    
+
+
+function FilterList({ isOpen, options, toggle }) {
+    const ulStyles = cntl`
+        absolute 
+        top-2 
+        left-0 
+        rounded 
+        border-solid 
+        border-gray-400 
+        border-2 
+        p-4 
+        bg-white
+        transition-opacity
+        ${isOpen ? 'opacity-100' : 'opacity-0'}
+    `
+    const liStyles = cntl`
+        flex 
+        mb-8 
+        [&>*]:cursor-pointer 
+        last-of-type:mb-0
+    `
     return (
         <div className="relative">
-            <ul className="absolute top-2 left-0 rounded border-solid border-gray-400 border-2 p-4 bg-white">
+            <ul className={ulStyles}>
             {options.map((option, ind) => ( 
-                <li key={`${option.label}-${ind}`} className="flex [&>*]:cursor-pointer mb-8 last-of-type:mb-0">
+                <li key={`${option.label}-${ind}`} className={liStyles}>
                     <input 
                         onChange={() => toggle(ind)}
                         className="mr-2" 
