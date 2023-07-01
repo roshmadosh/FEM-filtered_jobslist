@@ -43,12 +43,12 @@ function App() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-light-cyan">
       <Header /> 
-      <main className="max-w-7xl mx-auto mt-32 p-8">
+      <main className="max-w-7xl mx-auto p-0 sm:p-8">
         <Filter activeFilters={{ state: activeFilters, toggle: toggleFilter }} />
       </main>
-    </>
+    </div>
   )
 }
 

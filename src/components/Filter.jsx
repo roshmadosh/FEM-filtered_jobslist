@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FilterList from "./FilterList";
+import cntl from "cntl";
 
 const initOpenCategories = {
     role: false,
@@ -10,10 +11,25 @@ const initOpenCategories = {
 
 
 function Filter({ activeFilters }) {
+    const containerStyles = cntl`
+        flex 
+        justify-between 
+        sm:justify-evenly 
+        w-full 
+        sm:w-4/5 
+        p-4 
+        bg-white 
+        rounded 
+        shadow 
+        mx-auto
+    `
+
     const [openCategories, setOpenCategories] = useState(initOpenCategories);
 
     function onClick(category) {
-        setOpenCategories({ ...openCategories, [category]: !openCategories[category]});
+        const init = { ...openCategories }
+        Object.keys(init).forEach(key => init[key] = false);
+        setOpenCategories({ ...init, [category]: !openCategories[category]});
     }
 
     function curriedToggle(label) {
@@ -23,7 +39,7 @@ function Filter({ activeFilters }) {
     }
 
     return (
-       <div className="flex justify-evenly w-4/5 p-4 bg-indigo-500/50 rounded shadow mx-auto">
+       <div className={containerStyles}>
             <div className="block">
                 <button onClick={() => onClick('role')}>Role</button>
                 <FilterList 
