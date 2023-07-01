@@ -37,29 +37,30 @@ function App() {
     if (jobs && !activeFilters) {
       const role = fetchers.role()
         .filter(onlyUnique)
-        .map(role => new FilterOption(role))
+        .map(role => new FilterOption(role));
 
       const level = fetchers.level()
         .filter(onlyUnique)
-        .map(level => new FilterOption(level))
+        .map(level => new FilterOption(level));
 
       const location = fetchers.location()
         .filter(onlyUnique)
-        .map(loc => new FilterOption(loc))
+        .map(loc => new FilterOption(loc));
 
       const language = fetchers.language()
+        .flat()
         .filter(onlyUnique)
-        .map(lang => new FilterOption(lang))
+        .map(lang => new FilterOption(lang));
 
-      const data = { role, level, location, language }
-      setActiveFilters(data)
+      const data = { role, level, location, language };
+      setActiveFilters(data);
     }
   }, [jobs])
 
   function toggleFilter(key, ind) {
     const nestedUpdate = [ ...activeFilters[key] ];
     nestedUpdate[ind].isChecked = !nestedUpdate[ind].isChecked;
-    const update = { ...activeFilters, [key]: nestedUpdate }
+    const update = { ...activeFilters, [key]: nestedUpdate };
     setActiveFilters(update);
   }
 

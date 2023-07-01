@@ -22,7 +22,7 @@ export function useJobs() {
     }
 
     function getLanguages() {
-      return jobs && jobs.map(job => job.language);
+      return jobs && jobs.map(job => job.languages);
     }
 
     const fetchers = {
