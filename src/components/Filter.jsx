@@ -1,16 +1,17 @@
 import { useState } from "react";
 import FilterList from "./FilterList";
 import cntl from "cntl";
+import { MODAL_STATUS_ERROR } from "../hooks/useModal";
 
 const initOpenCategories = {
     role: false,
     level: false,
     location: false,
-    languages: false,
+    language: false,
 }
 
 
-function Filter({ activeFilters }) {
+function Filter({ dispatchModal, activeFilters }) {
     const containerStyles = cntl`
         flex 
         justify-between 
@@ -27,7 +28,16 @@ function Filter({ activeFilters }) {
     const [openCategories, setOpenCategories] = useState(initOpenCategories);
 
     function onClick(category) {
-        const init = { ...openCategories }
+        if (category == 'location' && activeFilters.state.location.length == 0) {
+            dispatchModal("No locations available for current results.", MODAL_STATUS_ERROR)
+            return;
+        }
+        if (category == 'language' && activeFilters.state.language.length == 0) {
+            dispatchModal("No languages available for current results.", MODAL_STATUS_ERROR)
+            return;
+        }
+
+        const init = { ...openCategories };
         Object.keys(init).forEach(key => init[key] = false);
         setOpenCategories({ ...init, [category]: !openCategories[category]});
     }
@@ -59,14 +69,15 @@ function Filter({ activeFilters }) {
                 <FilterList 
                     isOpen={openCategories.location}
                     options={activeFilters.state.location} 
-                    toggle={curriedToggle('location')} />
+                    toggle={curriedToggle('location')} /> 
+                    
             </div>
             <div className="block">
                 <button onClick={() => onClick('language')}>Language</button>
                 <FilterList 
                     isOpen={openCategories.language}
                     options={activeFilters.state.language} 
-                    toggle={curriedToggle('language')} />
+                    toggle={curriedToggle('language')} /> 
             </div>
        </div> 
     )

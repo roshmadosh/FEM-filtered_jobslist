@@ -1,5 +1,6 @@
-import { useState } from "react"
-import { Header, Filter } from "./components";
+import { useEffect, useState } from "react"
+import { Header, Filter, Modal } from "./components";
+import { useModal } from "./hooks/useModal"; 
 
 class FilterOption {
   label;
@@ -32,7 +33,9 @@ const initActiveFilters =  {
   language: initLanguageOptions,
 }
 
+
 function App() {
+  const [modalState, dispatchModal] = useModal(); 
   const [activeFilters, setActiveFilters] = useState(initActiveFilters);
   
   function toggleFilter(key, ind) {
@@ -46,8 +49,9 @@ function App() {
     <div className="min-h-screen bg-light-cyan">
       <Header /> 
       <main className="max-w-7xl mx-auto p-0 sm:p-8">
-        <Filter activeFilters={{ state: activeFilters, toggle: toggleFilter }} />
+        <Filter dispatchModal={dispatchModal} activeFilters={{ state: activeFilters, toggle: toggleFilter }} />
       </main>
+      {modalState.isActive && <Modal modalState={modalState} />}
     </div>
   )
 }
