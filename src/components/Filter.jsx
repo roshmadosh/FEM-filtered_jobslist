@@ -74,6 +74,7 @@ function Filter({ dispatchModal, activeFilters }) {
             <div className="block">
                 <button onClick={() => onClick('language')}>Language</button>
                 <FilterList 
+                    lastOfType={true}
                     isOpen={openCategories.language}
                     options={activeFilters.state.language} 
                     toggle={curriedToggle('language')} /> 

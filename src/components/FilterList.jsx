@@ -1,10 +1,10 @@
 import cntl from "cntl";
 
-function FilterList({ isOpen, options, toggle }) {
+function FilterList({ lastOfType, isOpen, options, toggle }) {
     const ulStyles = cntl`
         absolute 
         top-2 
-        left-0 
+        ${lastOfType ? 'right-0 sm:left-0 sm:right-auto': 'left-0'} 
         rounded 
         border-solid 
         border-gray-400 
