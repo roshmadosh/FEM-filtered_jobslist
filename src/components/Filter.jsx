@@ -2,6 +2,7 @@ import { useState } from "react";
 import FilterList from "./FilterList";
 import cntl from "cntl";
 import { MODAL_STATUS_ERROR } from "../hooks/useModal";
+import { ClickOutsideWrapper } from "./ClickOutsideWrapper";
 
 const initOpenCategories = {
     role: false,
@@ -48,36 +49,18 @@ function Filter({ dispatchModal, activeFilters, toggleFilter }) {
 
     return (
        <div className={containerStyles}>
+        {Object.keys(initOpenCategories).map(key => (
             <div className="block">
-                <button onClick={() => onClick('role')}>Role</button>
-                <FilterList 
-                    isOpen={openCategories.role}
-                    options={activeFilters.role} 
-                    toggle={curriedToggle('role')} />
+                <button onClick={() => onClick(key)}>{key}</button>
+                <ClickOutsideWrapper enabled={openCategories[key]} onClickOutside={() => setOpenCategories(initOpenCategories)}>
+                    <FilterList 
+                        isOpen={openCategories[key]}
+                        options={activeFilters[key]} 
+                        close={() => setOpenCategories(initOpenCategories)}
+                        toggle={curriedToggle(key)} />
+                </ClickOutsideWrapper> 
             </div>
-            <div className="block">
-                <button onClick={() => onClick('level')}>Level</button>
-                <FilterList 
-                    isOpen={openCategories.level}
-                    options={activeFilters.level} 
-                    toggle={curriedToggle('level')} />
-            </div>
-            <div className="block">
-                <button onClick={() => onClick('location')}>Location</button>
-                <FilterList 
-                    isOpen={openCategories.location}
-                    options={activeFilters.location} 
-                    toggle={curriedToggle('location')} /> 
-                    
-            </div>
-            <div className="block">
-                <button onClick={() => onClick('language')}>Language</button>
-                <FilterList 
-                    lastOfType={true}
-                    isOpen={openCategories.language}
-                    options={activeFilters.language} 
-                    toggle={curriedToggle('language')} /> 
-            </div>
+        ))}
        </div> 
     )
 }

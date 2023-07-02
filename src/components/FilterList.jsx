@@ -1,6 +1,7 @@
 import cntl from "cntl";
+import { ClickOutsideWrapper } from "./ClickOutsideWrapper";
 
-function FilterList({ lastOfType, isOpen, options, toggle }) {
+function FilterList({ close, lastOfType, isOpen, options, toggle }) {
     const ulStyles = cntl`
         absolute 
         top-2 
@@ -12,7 +13,7 @@ function FilterList({ lastOfType, isOpen, options, toggle }) {
         p-4 
         bg-white
         transition-opacity
-        ${isOpen ? 'opacity-100' : 'opacity-0'}
+        ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
     `
     const liStyles = cntl`
         flex 
@@ -20,6 +21,7 @@ function FilterList({ lastOfType, isOpen, options, toggle }) {
         [&>*]:cursor-pointer 
         last-of-type:mb-0
     `
+
     return (
         <div className="relative">
             <ul className={ulStyles}>
@@ -36,9 +38,7 @@ function FilterList({ lastOfType, isOpen, options, toggle }) {
             ))}
             </ul>
         </div>
-
     )
-
 }
 
 export default FilterList;
