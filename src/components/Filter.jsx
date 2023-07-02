@@ -10,13 +10,12 @@ const initOpenCategories = {
     language: false,
 }
 
-function Filter({ dispatchModal, activeFilters }) {
+function Filter({ dispatchModal, activeFilters, toggleFilter }) {
     const containerStyles = cntl`
         flex 
         justify-between 
         sm:justify-evenly 
         w-full 
-        sm:w-4/5 
         p-4 
         bg-white 
         rounded 
@@ -27,11 +26,11 @@ function Filter({ dispatchModal, activeFilters }) {
     const [openCategories, setOpenCategories] = useState(initOpenCategories);
 
     function onClick(category) {
-        if (category == 'location' && activeFilters.state.location.length == 0) {
+        if (category == 'location' && activeFilters.location.length == 0) {
             dispatchModal("No locations available for current results.", MODAL_STATUS_ERROR)
             return;
         }
-        if (category == 'language' && activeFilters.state.language.length == 0) {
+        if (category == 'language' && activeFilters.language.length == 0) {
             dispatchModal("No languages available for current results.", MODAL_STATUS_ERROR)
             return;
         }
@@ -43,7 +42,7 @@ function Filter({ dispatchModal, activeFilters }) {
 
     function curriedToggle(label) {
         return function(ind) {
-            activeFilters.toggle(label, ind);
+            toggleFilter(label, ind);
         }
     }
 
@@ -53,21 +52,21 @@ function Filter({ dispatchModal, activeFilters }) {
                 <button onClick={() => onClick('role')}>Role</button>
                 <FilterList 
                     isOpen={openCategories.role}
-                    options={activeFilters.state.role} 
+                    options={activeFilters.role} 
                     toggle={curriedToggle('role')} />
             </div>
             <div className="block">
                 <button onClick={() => onClick('level')}>Level</button>
                 <FilterList 
                     isOpen={openCategories.level}
-                    options={activeFilters.state.level} 
+                    options={activeFilters.level} 
                     toggle={curriedToggle('level')} />
             </div>
             <div className="block">
                 <button onClick={() => onClick('location')}>Location</button>
                 <FilterList 
                     isOpen={openCategories.location}
-                    options={activeFilters.state.location} 
+                    options={activeFilters.location} 
                     toggle={curriedToggle('location')} /> 
                     
             </div>
@@ -76,7 +75,7 @@ function Filter({ dispatchModal, activeFilters }) {
                 <FilterList 
                     lastOfType={true}
                     isOpen={openCategories.language}
-                    options={activeFilters.state.language} 
+                    options={activeFilters.language} 
                     toggle={curriedToggle('language')} /> 
             </div>
        </div> 

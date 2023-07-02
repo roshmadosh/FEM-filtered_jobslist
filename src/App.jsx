@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Header, Filter, Modal } from "./components";
+import { Header, Filter, Modal, ActiveFilter } from "./components";
 import { useModal } from "./hooks/useModal"; 
 import cntl from "cntl";
 import { useJobs } from "./hooks/useJobs";
@@ -64,14 +64,25 @@ function App() {
     setActiveFilters(update);
   }
 
+  function filtered() {
+    return Object.values(activeFilters)
+      .flatMap(option => option.filter(opt => opt.isChecked))
+      .map(option => option.label);
+  }
+
   return (
     <div className={containerStyles}>
       <Header /> 
-      <main className={mainStyles}>
-        {activeFilters && <Filter 
-          dispatchModal={dispatchModal} 
-          activeFilters={{ state: activeFilters, toggle: toggleFilter }} />}
-      </main>
+        {activeFilters && 
+          <main className={mainStyles}>
+            <Filter 
+              dispatchModal={dispatchModal} 
+              activeFilters={activeFilters}
+              toggleFilter={toggleFilter}
+            />
+            <ActiveFilter filtered={filtered()} />
+          </main>
+         }
       {modalState.isActive && <Modal modalState={modalState} />}
     </div>
   )
